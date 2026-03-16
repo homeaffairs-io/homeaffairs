@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Verify Email</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family: system-ui, -apple-system, Arial;
+  text-align:center;
+  padding:40px;
+}
+
+.button{
+  background:#4f46e5;
+  color:white;
+  padding:14px 22px;
+  border-radius:8px;
+  text-decoration:none;
+  display:inline-block;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Verify your email</h2>
+<p>Opening the app…</p>
+
+<a id="openApp" class="button">Open App</a>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+const deepLink = `homeaffairs://verify-email?token=${token}`;
+
+document.getElementById("openApp").href = deepLink;
+
+// attempt to open app
+window.location.href = deepLink;
+
+// fallback if app not installed
+setTimeout(() => {
+
+  const ua = navigator.userAgent || navigator.vendor;
+
+  if (/android/i.test(ua)) {
+
+    window.location.href =
+      "https://play.google.com/store/apps/details?id=io.homeaffairs.app";
+
+  } else if (/iPhone|iPad|iPod/.test(ua)) {
+
+    window.location.href =
+      "https://apps.apple.com/au/app/home-affairs/id1591728074";
+
+  }
+
+}, 2000);
+
+</script>
+
+</body>
+</html>
